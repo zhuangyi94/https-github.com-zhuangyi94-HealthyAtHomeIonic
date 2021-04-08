@@ -1,0 +1,7 @@
+{
+  "name": "healthyathome",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
