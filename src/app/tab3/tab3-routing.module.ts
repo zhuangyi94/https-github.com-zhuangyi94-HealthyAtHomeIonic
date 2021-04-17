@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Tab3Page } from './tab3.page';
+import { NgCalendarModule } from 'ionic2-calendar';
 
 const routes: Routes = [
   {
@@ -10,7 +11,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [NgCalendarModule,
+    RouterModule.forChild(routes)],
+
   exports: [RouterModule]
 })
 export class Tab3PageRoutingModule {}
