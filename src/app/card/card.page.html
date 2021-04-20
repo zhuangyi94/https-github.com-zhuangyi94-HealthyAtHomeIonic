@@ -18,8 +18,13 @@
       {{product.productDescription}}
 
       <ion-item>
-        <ion-button>
+        <ion-button (click)="addProduct(product)">
           Register
+        </ion-button>
+      </ion-item>
+      <ion-item>
+        <ion-button (click)="returnToMainMenu()">
+          Get Back
         </ion-button>
       </ion-item>
     </ion-card-content>

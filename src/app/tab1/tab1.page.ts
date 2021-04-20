@@ -35,9 +35,7 @@ export class Tab1Page implements OnInit{
 
   addToCart(product) {
     //this.cartService.addProduct(product);
-    //this.cartService.getRequest();
-    console.log("xxxx", this.items);
-
+    this.cartService.getRequest();
     let navigationExtras: NavigationExtras = {
 
       queryParams: product
@@ -47,14 +45,14 @@ export class Tab1Page implements OnInit{
     //this.router.navigateByUrl('/card');
   }
 
-  openCart() {
+  CreateProduct() {
     //this.navCtrl.navigateForward('card'), this.cart;
     
-    let navigationExtras: NavigationExtras = {
+    //let navigationExtras: NavigationExtras = {
       
-      queryParams: this.cart
-    };
-    this.router.navigate(['card'], navigationExtras);
+    //  queryParams: this.cart
+    //};
+    this.router.navigate(['add-product']);
   }
 
   generatePhoto() {

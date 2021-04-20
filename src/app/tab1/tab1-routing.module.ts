@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: 'card',
     loadChildren: './card.module'
+  },
+  {
+    path: 'add',
+    loadChildren: './add-product.module'
   }
 ];
 

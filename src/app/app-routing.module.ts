@@ -33,8 +33,12 @@ const routes: Routes = [
     loadChildren: './pages/post/post.module#PostPageModule'
   },
   {
+    path: 'add-product',
+    loadChildren: () => import('./add-product/add-product.module').then(m => m.AddProductPageModule)
+  },
+  {
     path: 'card',
-    loadChildren: () => import('./card/card.module').then( m => m.CardPageModule)
+    loadChildren: () => import('./card/card.module').then(m => m.CardPageModule)
   },
 ];
 @NgModule({

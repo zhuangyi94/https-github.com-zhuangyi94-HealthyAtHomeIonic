@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { __param } from 'tslib';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,49 @@ export class CartService {
          });
        });
      }
+  }
+
+  public productInfo =
+
+    {
+      "Name": "Yoga with Steven",
+      "Description": "Yoga Class",
+      "Price": 80,
+      "Picture": "xx",
+      "CategoryFk": "0e56a1a9-3951-41e0-bd7b-b92ea7a67c9d"
+    }
+
+  addProduct(product) {
+    const headers =
+      new HttpHeaders({
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "http://localhost:8100"
+      });
+
+    const params = JSON.parse(JSON.stringify(this.productInfo));
+    const responseTypes = 'text';
+
+    {
+
+      console.log("xx",params);
+      return new Promise(resolve => {
+        this.httpClient.post
+          ('http://api.xiamaomi.com/product/add',params,
+            //{ headers, responseType: responseType, params }
+            { responseType: responseTypes}
+            
+            
+          )
+          .subscribe(data => {
+            resolve(data);
+            //return (data);
+            console.log(data);
+          }, err => {
+            console.log(err);
+          });
+      });
+    }
+
   }
 
 
@@ -78,7 +122,7 @@ export class CartService {
     return this.cart;
   }
 
-  addProduct(product) {
-    this.cart.push(product);
-  }
+  //addProduct(product) {
+  //  this.cart.push(product);
+  //}
 }

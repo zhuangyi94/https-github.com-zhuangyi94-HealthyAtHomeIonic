@@ -4,9 +4,9 @@
       Healthy At Home
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="openCart()">
+      <ion-button (click)="CreateProduct()">
         <ion-badge *ngIf="cart.length > 0">{{ cart.length }}</ion-badge>
-        <ion-icon slot="icon-only" name="cart"></ion-icon>
+        <ion-icon slot="icon-only" name="add-circle"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

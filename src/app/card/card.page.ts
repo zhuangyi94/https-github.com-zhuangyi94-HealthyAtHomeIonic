@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CartService } from '../services/productInfo.service';
 
 @Component({
   selector: 'app-card',
@@ -38,7 +39,9 @@ export class CardPage implements OnInit {
     })
   }
 
-  constructor(public activatedRoute: ActivatedRoute) {
+  constructor(public activatedRoute: ActivatedRoute,
+    private cartService: CartService,
+    private router: Router  ) {
 
     //this.activatedRoute.queryParams.subscribe((res) => {
     //  console.log(res);
@@ -51,6 +54,16 @@ export class CardPage implements OnInit {
     //  event.target.style.background = '#ffffff';
     //});
 
+  }
+
+  addProduct(product) {
+
+    this.cartService.addProduct(product);
+
+  }
+
+  returnToMainMenu() {
+    this.router.navigate(['']);
   }
 
 
