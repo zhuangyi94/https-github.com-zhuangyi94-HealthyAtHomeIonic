@@ -3,11 +3,12 @@
     "",
     "\\src",
     "\\src\\app",
+    "\\src\\app\\pages\\intro",
+    "\\src\\app\\pages\\login",
     "\\src\\app\\services",
     "\\src\\app\\tab1",
-    "\\src\\app\\tab2",
-    "\\src\\assets",
-    "\\src\\environments"
+    "\\src\\app\\tab3",
+    "\\src\\app\\tabs"
   ],
   "SelectedNode": "\\src\\app\\services\\productInfo.service.ts",
   "PreviewInSolutionExplorer": false
