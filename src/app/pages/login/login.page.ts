@@ -22,8 +22,8 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.credentials = this.fb.group({
-      email: ['eve.holt@reqres.in', [Validators.required, Validators.email]],
-      password: ['cityslicka', [Validators.required, Validators.minLength(6)]],
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
@@ -34,7 +34,22 @@ export class LoginPage implements OnInit {
     this.authService.login(this.credentials.value).subscribe(
       async (res) => {
         await loading.dismiss();
-        this.router.navigateByUrl('/tabs', { replaceUrl: true });
+        if(this.authService.error =='')
+        {
+          this.router.navigateByUrl('/tabs', { replaceUrl: true });
+
+        }
+        else{
+          const alert = await this.alertController.create({
+            header: 'Login failed',
+            message: this.authService.error,
+            buttons: ['OK'],
+          });
+  
+          await alert.present();
+
+        }
+        
       },
       async (res) => {
         await loading.dismiss();
@@ -50,8 +65,8 @@ export class LoginPage implements OnInit {
   }
 
   // Easy access for form fields
-  get email() {
-    return this.credentials.get('email');
+  get username() {
+    return this.credentials.get('username');
   }
 
   get password() {

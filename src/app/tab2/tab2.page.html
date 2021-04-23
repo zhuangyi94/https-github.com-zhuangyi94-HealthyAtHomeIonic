@@ -1,21 +1,24 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Devdactic Blog</ion-title>
+    <ion-title>Trends</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <div text-center *ngIf="count">Found {{ count }} posts</div>
 
-  <ion-card *ngFor="let post of posts">
+  <ion-card >
     <ion-card-header>
-      <ion-card-title [innerHTML]="post.title.rendered"></ion-card-title>
-      <ion-card-subtitle>{{ post.date_gmt | date }}</ion-card-subtitle>
+      <ion-card-title >Top 10 Workout Trend</ion-card-title>      
     </ion-card-header>
     <ion-card-content>
-      <img [src]="post.media_url">
-      <div [innerHTML]="post.excerpt.rendered"></div>
-      <ion-button expand="full" fill="clear" [routerLink]="['/', 'posts', post.id]" text-right>Read More...</ion-button>
+      <ion-list>
+          <ion-item><ion-note  slot="start">1</ion-note><ion-label>David's Hot Yoga</ion-label></ion-item>
+          <ion-item><ion-note  slot="start">2</ion-note><ion-label>The Best Tabata by June</ion-label></ion-item>
+          <ion-item><ion-note  slot="start">3</ion-note><ion-label>Healthy TaiChi by Yi Ping</ion-label></ion-item>
+          <ion-item><ion-note  slot="start">4</ion-note><ion-label>Jenny's Cardio Workout</ion-label></ion-item>
+
+      </ion-list>
+      
     </ion-card-content>
   </ion-card>
 

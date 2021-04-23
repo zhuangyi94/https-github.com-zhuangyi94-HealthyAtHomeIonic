@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { map, tap, switchMap } from 'rxjs/operators';
 import { BehaviorSubject, from, Observable, Subject } from 'rxjs';
 
@@ -15,12 +15,20 @@ export class AuthenticationService {
   // Init with null to filter out the first value in a guard!
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   token = '';
+  error = '';
 
   constructor(private http: HttpClient) {
     this.loadToken();
   }
 
   async loadToken() {
+    
+    const headers = 
+    new HttpHeaders({
+      'Content-Type': 'application/json',
+      "Access-Control-Allow-Origin": "*"
+    });
+
     const token = await Storage.get({ key: TOKEN_KEY });
     if (token && token.value) {
       console.log('set token: ', token.value);
@@ -30,17 +38,62 @@ export class AuthenticationService {
       this.isAuthenticated.next(false);
     }
   }
+  
+  login(credentials: { username, password }):Observable<any>{
 
-  login(credentials: { email, password }): Observable<any> {
-    return this.http.post(`https://reqres.in/api/login`, credentials).pipe(
-      map((data: any) => data.token),
-      switchMap(token => {
-        return from(Storage.set({ key: TOKEN_KEY, value: token }));
+  
+    const params = JSON.parse(JSON.stringify(credentials));
+    console.log(params);
+    return this.http.post(`http://api.xiamaomi.com/user/login`,params).pipe(
+      
+      map((data: any) =>{
+        console.log(data);
+        this.error = data.errorMessage;
+        this.token = data.users[0];
       }),
-      tap(_ => {
-        this.isAuthenticated.next(true);
+      tap(result => {
+        if(this.token != undefined)
+        {
+          this.isAuthenticated.next(true);
+        }else
+        {
+          //return {error:"invalid username/password"};
+          this.isAuthenticated.next(false);
+        }
+        //console.log(result);
       })
     )
+    
+   /*
+    const headers =
+    new HttpHeaders({
+      'Content-Type': 'application/json',
+      "Access-Control-Allow-Origin": "*"
+    });
+
+    const params = JSON.parse(JSON.stringify(credentials));
+    const responseTypes = 'text';
+
+    
+
+      console.log("xx",params);
+      return new Promise(resolve => {
+        this.http.post
+          ('http://api.xiamaomi.com/user/login',params,
+            //{ headers, responseType: responseType, params }
+            { responseType: responseTypes}
+            
+            
+          )
+          .subscribe(data => {
+            resolve(data);
+            //return (data);
+            console.log(data);
+          }, err => {
+            console.log(err);
+          });
+      });
+    */
   }
 
   logout(): Promise<void> {

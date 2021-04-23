@@ -7,8 +7,8 @@ import { AutoLoginGuard } from './guards/auto-login.guard';
 const routes: Routes = [
   {
     path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule),
-    canLoad: [IntroGuard, AutoLoginGuard] // Check if we should show the introduction or forward to inside
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+    //,canLoad: [AutoLoginGuard]
   },
   {
     path: 'intro',
