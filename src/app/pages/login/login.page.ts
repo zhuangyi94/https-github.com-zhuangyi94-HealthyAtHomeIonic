@@ -72,4 +72,10 @@ export class LoginPage implements OnInit {
   get password() {
     return this.credentials.get('password');
   }
+
+
+  move_to_register(){
+    console.log('tap Not yet a member? Sign up!')
+    this.router.navigateByUrl('/register', { replaceUrl: true });
+  }
 }

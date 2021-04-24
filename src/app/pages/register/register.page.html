@@ -1,0 +1,46 @@
+<!--<ion-header>
+  <ion-toolbar>
+    <ion-title>Registration</ion-title>
+  </ion-toolbar>
+</ion-header>-->
+
+<ion-content>
+  <form (ngSubmit)="register()" [formGroup]="personalInformation">
+    <div class="input-group">
+      <ion-item>
+        <ion-input placeholder="username" formControlName="username"></ion-input>
+      </ion-item>
+      <div *ngIf="username?.errors && username?.touched" class="errors">
+        <span *ngIf="username.errors?.required">username is required</span>
+      </div>
+      <ion-item>
+        <ion-input placeholder="name" formControlName="name"></ion-input>
+      </ion-item>
+      <div *ngIf="name?.errors && name?.touched" class="errors">
+        <span *ngIf="name.errors?.required">name is required</span>
+      </div>
+      <ion-item>
+        <ion-input placeholder="email" formControlName="email" type="email"></ion-input>
+      </ion-item>
+      <div *ngIf="email?.errors && email?.touched" class="errors">
+        <span *ngIf="email.errors?.required">email is required</span>
+        <span *ngIf="email.errors?.pattern">invalid email</span>
+      </div>
+      <ion-item>
+        <ion-input placeholder="age" formControlName="age" type="number"></ion-input>
+      </ion-item>
+      <div *ngIf="age?.errors && age?.touched" class="errors">
+        <span *ngIf="age.errors?.required">age is required</span>
+      </div>
+      <ion-item>
+        <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
+      </ion-item>
+      <div *ngIf="(password?.dirty || password?.touched) && password?.errors" class="errors">
+        <span *ngIf="password.errors?.required">Password is required</span>
+        <span *ngIf="password.errors?.minlength">Password needs to be 6 characters</span>
+      </div>
+     
+    </div>
+    <ion-button type="submit" expand="block" [disabled]="!personalInformation.valid">Register</ion-button>
+  </form>
+</ion-content>

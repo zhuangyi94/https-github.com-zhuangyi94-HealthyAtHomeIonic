@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
-import { map, tap, switchMap } from 'rxjs/operators';
-import { BehaviorSubject, from, Observable, Subject } from 'rxjs';
+import { map, tap, switchMap,catchError } from 'rxjs/operators';
+import { BehaviorSubject, from, Observable, Subject  } from 'rxjs';
 
 import { Plugins } from '@capacitor/core';
 const { Storage } = Plugins;
@@ -64,36 +64,33 @@ export class AuthenticationService {
       })
     )
     
-   /*
-    const headers =
-    new HttpHeaders({
-      'Content-Type': 'application/json',
-      "Access-Control-Allow-Origin": "*"
-    });
+  }
 
-    const params = JSON.parse(JSON.stringify(credentials));
-    const responseTypes = 'text';
+  register(personalInformation: { username, password,name, age, email,roleid }):Observable<any>{
 
-    
-
-      console.log("xx",params);
-      return new Promise(resolve => {
-        this.http.post
-          ('http://api.xiamaomi.com/user/login',params,
-            //{ headers, responseType: responseType, params }
-            { responseType: responseTypes}
-            
-            
-          )
-          .subscribe(data => {
-            resolve(data);
-            //return (data);
-            console.log(data);
-          }, err => {
-            console.log(err);
-          });
-      });
-    */
+  
+    const params = JSON.parse(JSON.stringify(personalInformation));
+    console.log(params);
+    return this.http.post('http://api.xiamaomi.com/user/register',params).pipe(
+      
+      map((data: any) =>{
+        console.log(data);
+        this.error = data.errorMessage;
+        this.token = params;
+      }),
+      tap(result => {
+        if(this.token != undefined)
+        {
+          this.isAuthenticated.next(true);
+        }else
+        {
+          //return {error:"invalid username/password"};
+          this.isAuthenticated.next(false);
+        }
+        //console.log(result);
+        
+      })
+    );
   }
 
   logout(): Promise<void> {

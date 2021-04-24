@@ -24,7 +24,7 @@
     </div>
 
     <ion-button type="submit" expand="block" [disabled]="!credentials.valid">Log in</ion-button>
-    <ion-button type="button" expand="block" color="light" fill="clear">
+    <ion-button type="button" expand="block" color="light" fill="clear" (click)="move_to_register()">
       Not yet a member? Sign up!
     </ion-button>
   </form>
