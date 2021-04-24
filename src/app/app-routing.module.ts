@@ -31,11 +31,41 @@ const routes: Routes = [
   {
     path: 'posts/:id',
     loadChildren: './pages/post/post.module#PostPageModule'
-  },  {
+  },
+  {
     path: 'register',
     loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
   },
-
+  {
+    path: 'intro',
+    loadChildren: () => import('./pages/intro/intro.module').then( m => m.IntroPageModule)
+  },
+  {
+    path: 'tabs',
+    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule),
+    canLoad: [AuthGuard] // Secure all child pages
+  },
+  {
+    path: '',
+    redirectTo: '/login',
+    pathMatch: 'full'
+  },
+  {
+    path: 'posts',
+    loadChildren: './pages/posts/posts.module#PostsPageModule'
+  },
+  {
+    path: 'posts/:id',
+    loadChildren: './pages/post/post.module#PostPageModule'
+  },
+  {
+    path: 'add-product',
+    loadChildren: () => import('./add-product/add-product.module').then(m => m.AddProductPageModule)
+  },
+  {
+    path: 'card',
+    loadChildren: () => import('./card/card.module').then(m => m.CardPageModule)
+  },
 ];
 @NgModule({
   imports: [
