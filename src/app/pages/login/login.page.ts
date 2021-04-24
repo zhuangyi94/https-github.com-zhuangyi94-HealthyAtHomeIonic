@@ -34,7 +34,8 @@ export class LoginPage implements OnInit {
     this.authService.login(this.credentials.value).subscribe(
       async (res) => {
         await loading.dismiss();
-        if(this.authService.error =='')
+        console.log(this.authService.error);
+        if(this.authService.error =='' || this.authService.error == null)
         {
           this.router.navigateByUrl('/tabs', { replaceUrl: true });
 
