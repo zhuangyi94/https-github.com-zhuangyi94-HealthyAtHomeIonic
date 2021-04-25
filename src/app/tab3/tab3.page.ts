@@ -2,6 +2,8 @@ import { Component, ViewChild, OnInit, Inject, LOCALE_ID, AfterViewInit } from '
 import { CalendarComponent } from 'ionic2-calendar';
 import { AlertController } from '@ionic/angular';
 import { formatDate } from '@angular/common';
+import { ScheduleService } from './../services/scheduleinfo.service';
+import { CalendarMode } from 'ionic2-calendar/calendar';
 
 @Component({
   selector: 'app-tab3',
@@ -10,81 +12,56 @@ import { formatDate } from '@angular/common';
 })
 export class Tab3Page implements OnInit {
 
-  
+
 
   event = {
     title: '',
     desc: '',
     startTime: '',
     endTime: '',
-    allDay: false
+    productName: ''
   };
 
-  minDate = new Date().toISOString();
 
-  eventSource = [];
+  eventSource;
   viewTitle;
 
   calendar = {
-    mode: 'month',
+    mode: 'month' as CalendarMode,
     currentDate: new Date(),
   };
 
   //@ViewChild(CalendarComponent) myCal: CalendarComponent;
-  
 
 
-  constructor(private alertCtrl: AlertController, @Inject(LOCALE_ID) private locale: string) { }
+
+  constructor(private alertCtrl: AlertController, @Inject(LOCALE_ID) private locale: string, private  scheduleService : ScheduleService) { }
 
   ngOnInit() {
-    this.resetEvent();
+    //Schedule from Schedule Table by calling https://localhost:5001/scheduler/get/all API
+    this.eventSource = this.scheduleService.getSchedulesFromScheduleTable().then( x => this.eventSource = x).catch( error => console.log("error binding to event source..", error));
+
+    //If received prodcut Id with Dummy single object
+    //pass value
+    //let productObj = [{productId: '6b4c8fb8-090c-4482-9d93-568fd4e0b1fa' , productName : "Yoga Course", startDate : new Date(), endDate : new Date()}]
+    //this.eventSource = this.scheduleService.getSchedulesFromProductIdObject(productObj).then( x => this.eventSource = x).catch( error => console.log("error binding to event source..", error));
+
+
+    //If received product Id is in List;
+    //this.eventSource = this.scheduleService.getProductList().then( x => this.scheduleService.getSchedulesFromProductIdList(x)).then( y => this.eventSource = y).catch( error => console.log("error binding to event source..", error));
   }
 
 
   @ViewChild(CalendarComponent, { static: false }) myCal: CalendarComponent;
 
-  resetEvent() {
-    this.event = {
-      title: '',
-      desc: '',
-      startTime: new Date().toISOString(),
-      endTime: new Date().toISOString(),
-      allDay: false
-    };
-  }
-
-  // Create the right event format and reload source
-  addEvent() {
-    let eventCopy = {
-      title: this.event.title,
-      startTime: new Date(this.event.startTime),
-      endTime: new Date(this.event.endTime),
-      allDay: this.event.allDay,
-      desc: this.event.desc
-    }
-
-    if (eventCopy.allDay) {
-      let start = eventCopy.startTime;
-      let end = eventCopy.endTime;
-
-      eventCopy.startTime = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth(), start.getUTCDate()));
-      eventCopy.endTime = new Date(Date.UTC(end.getUTCFullYear(), end.getUTCMonth(), end.getUTCDate() + 1));
-    }
-
-    this.eventSource.push(eventCopy);
-    this.myCal.loadEvents();
-    this.resetEvent();
-  }
 
   // Change current month/week/day
   next() {
-    var swiper = document.querySelector('.swiper-container')['swiper'];
-    swiper.slideNext();
+    this.myCal.slideNext();
   }
 
   back() {
-    var swiper = document.querySelector('.swiper-container')['swiper'];
-    swiper.slidePrev();
+    this.myCal.slidePrev();
   }
 
   // Change between month/week/day
@@ -111,7 +88,7 @@ export class Tab3Page implements OnInit {
     const alert = await this.alertCtrl.create({
       header: event.title,
       subHeader: event.desc,
-      message: 'From: ' + start + '<br><br>To: ' + end,
+      message: 'Product Name: ' + event.productName + '<br><br>From: ' + start + '<br><br>To: ' + end,
       buttons: ['OK']
     });
     alert.present();
