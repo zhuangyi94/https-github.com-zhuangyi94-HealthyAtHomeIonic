@@ -4,41 +4,60 @@
       <ion-row color="primary" justify-content-center>
         <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
           <div text-center>
-            <h3>Class</h3>
+            <h3>Create Fitness Class</h3>
           </div>
           <div padding>
             <ion-item>
-              <ion-input name="name" type="text" placeholder="Class Name" ngModel required></ion-input>
+              <ion-col text-center>
+                <ion-button (click)="getImage()">Choose Images</ion-button>
+              </ion-col>
             </ion-item>
             <ion-item>
-              <ion-input name="name" type="text" placeholder="Descriptions" ngModel required></ion-input>
+              <ion-input name="name"
+                         type="text"
+                         placeholder="Class Name"
+                         [(ngModel)]="name"
+                         ngModel required></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input name="description" type="text" placeholder="Descriptions" ngModel required></ion-input>
             </ion-item>
             <ion-item>
               <ion-label>Category</ion-label>
-              <ion-select value="brown" okText="Okay" cancelText="Dismiss">
+              <ion-select required value="brown"
+                          okText="Okay"
+                          cancelText="Dismiss"
+                          name="category"
+                          [(ngModel)]="category">
                 <ion-select-option value="Yoga">Yoga</ion-select-option>
                 <ion-select-option value="HIIT">HIIT</ion-select-option>
                 <ion-select-option value="Zumba">Zumba</ion-select-option>
               </ion-select>
             </ion-item>
             <ion-item>
-              <ion-input name="password" type="password" placeholder="Password" ngModel required></ion-input>
+              <ion-input name="price" type="number" placeholder="Price" ngModel required></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input name="confirm" type="password" placeholder="" ngModel required></ion-input>
+              <ion-datetime [(ngModel)]="starttime"
+                            placeholder="Choose Starting Time"
+                            displayFormat="YYYY-DD-MM hh:mm A"
+                            name="startTime"
+                            required></ion-datetime>
             </ion-item>
             <ion-item>
-              <ion-datetime placeholder="Choose Date" displayFormat="YYYY-DD-MM"></ion-datetime>
-            </ion-item>
-            <ion-item>
-              <ion-datetime placeholder="Choose Starting Time" displayFormat="hh:mm A"></ion-datetime>
-            </ion-item>
-            <ion-item>
-              <ion-datetime placeholder="Choose Ending Time" displayFormat="hh:mm A"></ion-datetime>
+              <ion-datetime placeholder="Choose Ending Time"
+                            displayFormat="YYYY-DD-MM hh:mm A"
+                            name="endtime"
+                            [(ngModel)]="endtime"
+                            ></ion-datetime>
             </ion-item>
           </div>
           <div padding>
-            <ion-button size="medium" type="submit" [disabled]="form.invalid" expand="block">Add</ion-button>
+            <ion-button size="medium"
+                        type="submit"
+                        [disabled]="form.invalid"
+                        expand="block"
+                        >Add</ion-button>
           </div>
         </ion-col>
       </ion-row>

@@ -8,6 +8,9 @@ import { AddProductPageRoutingModule } from './add-product-routing.module';
 
 import { AddProductPage } from './add-product.page';
 
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -15,6 +18,7 @@ import { AddProductPage } from './add-product.page';
     IonicModule,
     AddProductPageRoutingModule
   ],
-  declarations: [AddProductPage]
+  declarations: [AddProductPage],
+  providers: [ImagePicker]
 })
 export class AddProductPageModule {}

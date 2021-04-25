@@ -14,7 +14,9 @@ export class CardPage implements OnInit {
     productDescription: "",
     dateTime: "",
     price: "",
-    photo: ""
+    photo: "",
+    startDate: "",
+    endDate: ""
   }
   //public productName = "";
   //public productDescription = "";
@@ -23,12 +25,13 @@ export class CardPage implements OnInit {
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
 
-      console.log(params)
-      this.product.productName = params.name;
-      this.product.productDescription = params.description,
-      this.product.dateTime = "",
-        this.product.price = params.price
-      this.product.photo = params.photo
+      console.log("params",params)
+      this.product.productName = params.productName;
+      this.product.productDescription = params.productDescription,
+      this.product.startDate = "2021-04-25 10:00",
+      this.product.endDate = "2021-04-26 10:00",
+      this.product.price = params.productPrice,
+      this.product.photo = params.productPhoto
 
       console.log(this.product);
       
@@ -56,14 +59,24 @@ export class CardPage implements OnInit {
 
   }
 
-  addProduct(product) {
+  subscribeProduct(product) {
 
     this.cartService.addProduct(product);
 
   }
 
+  btn_txt = 'Subscribe';
+  check() {
+    if (this.btn_txt == 'Check') {
+      //do some logic
+      this.btn_txt = 'Subscribed';
+    } else {
+      console.log('go to next page');
+    }
+  }
+
   returnToMainMenu() {
-    this.router.navigate(['']);
+    this.router.navigate(['tabs']);
   }
 
 

@@ -1,34 +1,92 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { __param } from 'tslib';
+import { promise } from 'protractor';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
-   getRequest() {
+  public productList = [];
 
+
+  public getRequest(){
+
+     console.log("service step 1");
      const headers = 
        new HttpHeaders({
          'Content-Type': 'application/json',
-         "Access-Control-Allow-Origin": "http://localhost:8100"
+         "Access-Control-Allow-Origin": ["http://localhost:8100","http://localhost:3000"]
        });
-     {
-       return new Promise(resolve => {
+     
+    return new Promise<object>(resolve => {
+      console.log("service step 2");
          this.httpClient.get
-           ('http://api.xiamaomi.com/product/search/Aerobic%20Class%20by%20ZY',
+           ('http://api.xiamaomi.com/product/search/%20',
              { headers }
            )
            .subscribe(data => {
+             this.organizeData(data);
              resolve(data);
-             //return (data);
-           console.log(data);
          }, err => {
-           console.log(err);
+               console.log(err);
+               return (err);
          });
-       });
-     }
+    });
+    
+     
+  }
+
+  organizeData(productData) {
+
+    //let productList = []
+
+    let categoryYoga = {
+      category: 'Yoga',
+      expanded: true,
+      products: []
+    }
+
+    for (let i = 0; i < productData.products.length; i++) {
+      console.log(productData.products[i]); //use i instead of 0
+
+      if (productData.products[i].categoryFk == "0e56a1a9-3951-41e0-bd7b-b92ea7a67c9d") {
+        let list = {
+
+          id: i,
+          name: productData.products[i].name,
+          price: productData.products[i].price,
+          description: productData.products[i].description,
+        }
+        categoryYoga.products.push(list);
+      }
+    }
+
+    let categoryAerobic = {
+      category: 'Aerobic',
+      products: []
+    }
+
+    for (let i = 0; i < productData.products.length; i++) {
+      //console.log(productData.products[i]); //use i instead of 0
+
+      if (productData.products[i].categoryFk == "ae4ee32a-2bb7-4c45-8c2e-b8c616d4c77c") {
+        console.log("same", productData.products.categoryFk)
+        let list = {
+
+          id: i,
+          name: productData.products[i].name,
+          price: productData.products[i].price,
+          description: productData.products[i].description,
+        }
+        categoryAerobic.products.push(list);
+      }
+    }
+
+    this.productList = [categoryYoga, categoryAerobic];
+
+    console.log("complete organize", this.productList);
   }
 
   public productInfo =
@@ -76,6 +134,7 @@ export class CartService {
 
 
 
+
   private data = [
     {
       category: 'HIIT',
@@ -114,8 +173,11 @@ export class CartService {
   constructor(public httpClient: HttpClient) {
 
   }
-  getProducts() {
-    return this.data;
+  async getProducts() {
+    await this.getRequest();
+      return this.productList;
+
+    
   }
 
   getCart() {

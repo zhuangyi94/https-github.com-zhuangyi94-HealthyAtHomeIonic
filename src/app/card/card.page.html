@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Ionic Blank
+      Class Details
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,29 +9,28 @@
 <ion-content padding>
   <ion-card>
     <ion-card-header>
-      <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
       <ion-card-title>{{product.productName}}</ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
       <img src="data:image/png;base64,{{product.photo}}" />
       {{product.productDescription}}
+      <br />
+      Subscription fee: {{product.price}}
+      <br />
+      Time: {{product.startDate}} - {{product.endDate}}
+    <ion-button item-start (click)="subscribeProduct(product)">
+      {{btn_txt}}
+    </ion-button>
+      <ion-button item-end (click)="returnToMainMenu()">
+        Get Back
+      </ion-button>
 
-      <ion-item>
-        <ion-button (click)="addProduct(product)">
-          Register
-        </ion-button>
-      </ion-item>
-      <ion-item>
-        <ion-button (click)="returnToMainMenu()">
-          Get Back
-        </ion-button>
-      </ion-item>
     </ion-card-content>
 
 </ion-card>
 
-  <ion-card>
+  <!--<ion-card>
     <ion-item>
       <ion-icon name="pin" slot="start"></ion-icon>
       <ion-label>ion-item in a card, icon left, button right</ion-label>
@@ -43,7 +42,7 @@
       within an ion-card-content element.
     </ion-card-content>
 
-  </ion-card>
+  </ion-card>-->
 
   <!--<ion-card>
     <ion-item href="#" class="ion-activated">

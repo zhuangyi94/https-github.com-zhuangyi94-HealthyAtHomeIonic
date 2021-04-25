@@ -6,6 +6,7 @@ import { Tab1Page } from './tab1.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 import { Tab1PageRoutingModule } from './tab1-routing.module';
 import { SwingModule } from 'angular2-swing';
+import { File } from '@ionic-native/file/ngx';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { SwingModule } from 'angular2-swing';
     Tab1PageRoutingModule,
     SwingModule
   ],
-  declarations: [Tab1Page]
+  declarations: [Tab1Page],
+  providers: [File]
 })
 export class Tab1PageModule {}
