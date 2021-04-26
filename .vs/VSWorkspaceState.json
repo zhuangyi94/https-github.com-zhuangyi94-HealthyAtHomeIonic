@@ -1,8 +1,15 @@
 {
   "ExpandedNodes": [
+    "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\services"
+    "\\src\\app\\add-product",
+    "\\src\\app\\card",
+    "\\src\\app\\pages\\login",
+    "\\src\\app\\pages\\register",
+    "\\src\\app\\services",
+    "\\src\\app\\tab1"
   ],
+  "SelectedNode": "\\src\\app\\add-product\\add-product.page.ts",
   "PreviewInSolutionExplorer": false
 }

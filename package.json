@@ -35,6 +35,7 @@
     "cordova-plugin-datepicker": "^0.9.3",
     "cordova-plugin-telerik-imagepicker": "^2.3.6",
     "ionic2-calendar": "^0.6.7",
+    "jetifier": "^1.6.6",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
