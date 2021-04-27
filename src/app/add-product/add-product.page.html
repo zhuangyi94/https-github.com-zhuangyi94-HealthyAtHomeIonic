@@ -1,23 +1,38 @@
-<ion-content >
+<ion-content>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>
+        Create Fitness Class
+      </ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="return()">
+          <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
   <form #form="ngForm" (ngSubmit)="register(form)">
     <ion-grid>
       <ion-row color="primary" justify-content-center>
         <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
-          <div text-center>
+          <!--<div text-center>
             <h3>Create Fitness Class</h3>
-          </div>
+          </div>-->
           <div padding>
+            <!--<ion-item>
+            <ion-col text-center>
+              <ion-button (click)="getImage()">Choose Images</ion-button>
+            </ion-col>
+          </ion-item>
+          <ion-item>
+            <ion-input name="name"
+                        type="text"
+                        placeholder="Class Name"
+                        [(ngModel)]="name"
+                        ngModel required></ion-input>
+          </ion-item>-->
             <ion-item>
-              <ion-col text-center>
-                <ion-button (click)="getImage()">Choose Images</ion-button>
-              </ion-col>
-            </ion-item>
-            <ion-item>
-              <ion-input name="name"
-                         type="text"
-                         placeholder="Class Name"
-                         [(ngModel)]="name"
-                         ngModel required></ion-input>
+              <ion-input name="name" type="text" placeholder="Class Name" ngModel required></ion-input>
             </ion-item>
             <ion-item>
               <ion-input name="description" type="text" placeholder="Descriptions" ngModel required></ion-input>
@@ -48,16 +63,14 @@
               <ion-datetime placeholder="Choose Ending Time"
                             displayFormat="YYYY-DD-MM hh:mm A"
                             name="endtime"
-                            [(ngModel)]="endtime"
-                            ></ion-datetime>
+                            [(ngModel)]="endtime"></ion-datetime>
             </ion-item>
           </div>
           <div padding>
             <ion-button size="medium"
                         type="submit"
                         [disabled]="form.invalid"
-                        expand="block"
-                        >Add</ion-button>
+                        expand="block">Add</ion-button>
           </div>
         </ion-col>
       </ion-row>

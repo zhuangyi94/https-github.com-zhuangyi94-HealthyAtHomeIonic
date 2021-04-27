@@ -61,7 +61,22 @@ export class CardPage implements OnInit {
 
   subscribeProduct(product) {
 
-    this.cartService.addProduct(product);
+    console.log("product", product)
+    if (document.getElementById('sub').innerHTML == 'Subscribed') {
+      document.getElementById('sub').innerHTML = 'Subscribe';
+      //document.body.style.background = 'red';
+      document.getElementById('sub').style.color  = 'Primary';
+    } else {
+      document.getElementById('sub').innerHTML = 'Subscribed';
+      //document.body.style.background = 'green';
+      document.getElementById('sub').style.color  = 'Secondary';
+    }
+
+    this.cartService.addSubscription(product).then(data => {
+
+
+
+    });
 
   }
 
