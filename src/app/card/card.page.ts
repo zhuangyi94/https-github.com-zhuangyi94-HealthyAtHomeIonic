@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/
 import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from '../services/productInfo.service';
 import { AuthenticationService } from './../services/authentication.service';
+import { Events } from '../services/event.service';
 
 @Component({
   selector: 'app-card',
@@ -57,6 +58,7 @@ export class CardPage implements OnInit {
   }
 
   constructor(
+    private events: Events,
     private authService: AuthenticationService,
     public activatedRoute: ActivatedRoute,
     private cartService: CartService,

@@ -5,6 +5,7 @@ import { ActionSheetOptions } from '@capacitor/core';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { IonDatetime, NavController } from '@ionic/angular';
 import { CartService } from '../services/productInfo.service';
+import { Events } from '../services/event.service';
 
 @Component({
   selector: 'app-add-product',
@@ -13,7 +14,9 @@ import { CartService } from '../services/productInfo.service';
 })
 export class AddProductPage implements OnInit {
 
-  constructor(private imagePicker: ImagePicker,
+  constructor(
+    private event: Events,
+    private imagePicker: ImagePicker,
     private router: Router,
     private cartService: CartService,
     public navctrl: NavController) { }
@@ -61,12 +64,14 @@ export class AddProductPage implements OnInit {
 
     ).then(data => {
       console.log("data after adding product:", data);
+      this.event.publish("Publish");
       this.router.navigate(['tabs']);
     })
 
   }
 
   return() {
+    
     this.navctrl.navigateBack('tabs');
   }
 
