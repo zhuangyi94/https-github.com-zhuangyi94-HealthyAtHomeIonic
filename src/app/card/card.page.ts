@@ -22,29 +22,24 @@ export class CardPage implements OnInit {
   }
 
   public subId = ""
-  //public productName = "";
-  //public productDescription = "";
-  //public dateTime = "";
 
   ngOnInit() {
 
-    
-
     this.activatedRoute.queryParams.subscribe(params => {
 
-      console.log("params",params)
+      console.log("params that passed into Product Profile: ",params)
       this.product.productName = params.productName;
       this.product.productDescription = params.productDescription,
       this.product.startDate = "2021-04-25 10:00",
       this.product.endDate = "2021-04-26 10:00",
       this.product.price = params.productPrice,
-        this.product.photo = params.productPhoto
+      this.product.photo = params.productPhoto
       this.product.userId = params.userId,
-        this.product.productId = params.productId
+      this.product.productId = params.productId
 
       this.cartService.checkSubscription("f687a69a-0abd-4e9f-ae51-47b8a34b910a", this.product.productId).then(
         result => {
-          console.log("final result", result)
+          console.log("Subscription ID:", result)
           if (result) {
             document.getElementById('sub').innerHTML = 'Subscribed';
             this.subId = result.toString();
@@ -54,12 +49,9 @@ export class CardPage implements OnInit {
         }
       );
 
-      console.log(this.product);
-
     })
 
-    
-
+   
     
   }
 
@@ -67,41 +59,35 @@ export class CardPage implements OnInit {
     private cartService: CartService,
     private router: Router  ) {
     
-    //this.activatedRoute.queryParams.subscribe((res) => {
-    //  console.log(res);
-    //});
   }
 
   ngAfterViewInit() {
-    // Either subscribe in controller or set in HTML
-    //this.swingStack.throwin.subscribe((event: DragEvent) => {
-    //  event.target.style.background = '#ffffff';
-    //});
+
 
   }
   
 
   subscribeProduct(product) {
 
-    console.log("product", product)
-    console.log("should we sub", document.getElementById('sub').innerHTML)
+    console.log("Status:", document.getElementById('sub').innerHTML)
     let selection = document.getElementById('sub').innerHTML;
-    console.log("selection value:" + selection + "xxx")
     if (selection == " Subscribe ") {
-      console.log("sub here 1")
+      console.log("Proceed to sub")
       this.cartService.addSubscription(product).then(data => {
 
-       console.log("after sub", data)
+       console.log("After sub:", data)
         this.subId = data.toString();
         console.log(this.subId)
       });
     } else {
-      console.log("sub here 2", this.subId)
+      console.log("Remove the sub", this.subId)
       this.cartService.removeSubscription(this.subId).then(data => {
 
-        console.log("after unsub", data)
+        console.log("After unsub:", data)
       });
     }
+
+    this.cartService.addTrend(product.productName);
 
 
 

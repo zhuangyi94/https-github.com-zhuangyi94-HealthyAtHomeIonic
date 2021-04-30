@@ -13,12 +13,6 @@ import { CartService } from '../services/productInfo.service';
 })
 export class AddProductPage implements OnInit {
 
-  //description: Text;
-  //starttime: IonDatetime;
-  //endtime: IonDatetime;
-  //price: Text;
-
-
   constructor(private imagePicker: ImagePicker,
     private router: Router,
     private cartService: CartService,
@@ -57,50 +51,23 @@ export class AddProductPage implements OnInit {
       endDate: form.value.endtime,
       productName: form.value.name,
       productDescription: form.value.description,
-      productId: "037bb049-76ed-4bdc-a8d4-55f79089c4e0"
+      productId: ""
     }
 
     this.cartService.addProduct(product).then(data => {
-
-      console.log("product ID", data)
       schedule.productId = data.toString()
-      console.log("product ID 2", schedule.productId)
+      console.log("Product ID mapped from product table:", schedule.productId)
     }).then(data => { this.cartService.addSchedule(schedule);}
 
     ).then(data => {
-      console.log("after scheudle", data);
+      console.log("data after adding product:", data);
       this.router.navigate(['tabs']);
     })
-
-    //this.cartService.addSchedule(schedule).then(data => {
-
-    //  //this.router.navigate(['tabs']);
-    //});
-
-    //this.cartService.addProduct(product).then(data => {
-    //  console.log("data",data)
-    //  this.navctrl.navigateBack('tabs');
-    // //this.router.navigate(['tabs']);
-    //  //var productid = "037bb049-76ed-4bdc-a8d4-55f79089c4e0"
-
-    //  //let schedule = {
-    //  //  schedulerName: "dummy",
-    //  //  schedulerDescription: "dummy",
-    //  //  startDate: form.value.startdate,
-    //  //  endDate: form.value.enddate,
-    //  //  productName: form.value.productName,
-    //  //  productId: "037bb049-76ed-4bdc-a8d4-55f79089c4e0"
-    //  //}
-    //  //this.cartService.addSchedule(schedule);
-
-    //})
 
   }
 
   return() {
-    //this.router.navigate(['tabs']);
     this.navctrl.navigateBack('tabs');
-    //this.navctrl.setRoot();
   }
 
   getImage() {

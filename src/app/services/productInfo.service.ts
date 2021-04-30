@@ -317,6 +317,39 @@ export class CartService {
 
   }
 
+  addTrend(productName) {
+    const headers =
+      new HttpHeaders({
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "http://localhost:8100"
+      });
+    console.log("product", productName)
+    const params = ""
+    //const params = JSON.parse(JSON.stringify(product));
+    const responseTypes = 'text';
+
+    {
+
+      console.log("xx", params);
+      return new Promise(resolve => {
+        this.httpClient.get
+          ('http://api.xiamaomi.com/product/search/' + productName,
+            //{ headers, responseType: responseType, params }
+            { responseType: responseTypes }
+
+
+          )
+          .subscribe(data => {
+            resolve(data);
+            return (data);
+            console.log(data);
+          }, err => {
+            console.log(err);
+          });
+      });
+    }
+
+  }
 
 
 
