@@ -3,6 +3,11 @@
     <ion-title>
       Healthy At Home
     </ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+        </ion-button>
+    </ion-buttons>
     <ion-buttons slot="end">
       <ion-button (click)="CreateProduct()">
         <ion-badge *ngIf="cart.length > 0">{{ cart.length }}</ion-badge>
