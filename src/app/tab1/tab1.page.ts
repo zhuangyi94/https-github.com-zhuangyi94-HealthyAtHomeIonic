@@ -61,7 +61,7 @@ export class Tab1Page implements OnInit{
     public navCtrl: NavController) { }
 
   public ngOnInit() {
-    console.log("ionViewWillEnter fired");
+    //console.log("ionViewWillEnter fired");
     this.cartService.getProducts().then((data) => {
       console.log("hehe", this.items, data);
       this.items = data;
@@ -78,9 +78,6 @@ export class Tab1Page implements OnInit{
     console.log("wake up")
   }
 
-  ionViewDidEnter(){
-    console.log("suit up")
-  }
 
   addToCart(product) {
 
@@ -95,7 +92,7 @@ export class Tab1Page implements OnInit{
         productPhoto: this.photo,
         productStartDate: product.startDate,
         productEndDate: product.endDate,
-        userID: ""
+        userID: this.authService.token
       }
     };
 

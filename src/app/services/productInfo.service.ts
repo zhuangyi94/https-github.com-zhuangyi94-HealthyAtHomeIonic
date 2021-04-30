@@ -229,17 +229,18 @@ export class CartService {
 
   }
 
-  addSubscription(product) {
+  addSubscription(product,token) {
     const headers =
       new HttpHeaders({
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "http://localhost:8100"
       });
     console.log("product", product)
-    product.userID = "f687a69a-0abd-4e9f-ae51-47b8a34b910a"
+    console.log("token",token)
+    product.userID = ""
     const params = {
       ProductFk: product.productId,
-      UserFk: product.userID
+      UserFk: token.id
     }
     //const params = JSON.parse(JSON.stringify(product));
     const responseTypes = 'text';
