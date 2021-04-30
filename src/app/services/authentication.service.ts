@@ -1,9 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable} from '@angular/core';
+
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { map, tap, switchMap,catchError } from 'rxjs/operators';
 import { BehaviorSubject, from, Observable, Subject  } from 'rxjs';
 
 import { Plugins } from '@capacitor/core';
+import { isNull } from '@angular/compiler/src/output/output_ast';
 const { Storage } = Plugins;
 
 const TOKEN_KEY = 'my-token';
@@ -96,5 +98,27 @@ export class AuthenticationService {
   logout(): Promise<void> {
     this.isAuthenticated.next(false);
     return Storage.remove({ key: TOKEN_KEY });
+  }
+
+  getUserToken(){
+    return this.token;
+
+  }
+  checkIfUserTokenExist(){
+    console.log("this token");
+    console.log(this.token["id"]);
+    if(!this.token["id"])
+    {
+      console.log("checkIfUserTokenExist return false");
+      return false;
+
+    }
+    else
+    {
+      console.log("checkIfUserTokenExist return true");
+      
+      return true;
+    }
+
   }
 }

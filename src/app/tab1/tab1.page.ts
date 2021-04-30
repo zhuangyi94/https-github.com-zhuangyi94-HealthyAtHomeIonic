@@ -62,6 +62,10 @@ export class Tab1Page implements OnInit{
 
   public ngOnInit() {
     console.log("ionViewWillEnter fired");
+    if(!this.authService.checkIfUserTokenExist()){
+      this.router.navigateByUrl('/login', { replaceUrl: true });
+    }
+    
     this.cartService.getProducts().then((data) => {
       console.log("hehe", this.items, data);
       this.items = data;
