@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { CartService } from '../services/productInfo.service';
 import { NavController } from '@ionic/angular';
+import { Events } from '../services/event.service';
 
 @Component({
   selector: 'app-tab1',
@@ -55,17 +56,28 @@ export class Tab1Page implements OnInit{
     }
   ];
 
-  constructor(private authService: AuthenticationService,
+  constructor(
+    private events: Events,
+    private authService: AuthenticationService,
     private router: Router,
     private cartService: CartService,
-    public navCtrl: NavController) { }
+    public navCtrl: NavController) {
+
+    this.events.subscribe("Publish", (data) => {
+      console.log("got the signal");
+      this.ngOnInit();
+
+    })
+
+  }
 
   public ngOnInit() {
     console.log("ionViewWillEnter fired");
     if(!this.authService.checkIfUserTokenExist()){
       this.router.navigateByUrl('/login', { replaceUrl: true });
     }
-    
+    //console.log("ionViewWillEnter fired");
+
     this.cartService.getProducts().then((data) => {
       console.log("hehe", this.items, data);
       this.items = data;
@@ -73,18 +85,19 @@ export class Tab1Page implements OnInit{
     });
     console.log(this.items);
     this.cart = this.cartService.getCart();
+
    // this.items = this.data;
 
   }
+
+  
 
   ionViewWillEnter() {
     this.ngOnInit();
     console.log("wake up")
   }
 
-  ionViewDidEnter(){
-    console.log("suit up")
-  }
+
 
   addToCart(product) {
 
@@ -99,7 +112,7 @@ export class Tab1Page implements OnInit{
         productPhoto: this.photo,
         productStartDate: product.startDate,
         productEndDate: product.endDate,
-        userID: ""
+        userID: this.authService.token
       }
     };
 

@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from '../services/productInfo.service';
+import { AuthenticationService } from './../services/authentication.service';
+import { Events } from '../services/event.service';
 
 @Component({
   selector: 'app-card',
@@ -55,7 +57,10 @@ export class CardPage implements OnInit {
     
   }
 
-  constructor(public activatedRoute: ActivatedRoute,
+  constructor(
+    private events: Events,
+    private authService: AuthenticationService,
+    public activatedRoute: ActivatedRoute,
     private cartService: CartService,
     private router: Router  ) {
     
@@ -73,7 +78,7 @@ export class CardPage implements OnInit {
     let selection = document.getElementById('sub').innerHTML;
     if (selection == " Subscribe ") {
       console.log("Proceed to sub")
-      this.cartService.addSubscription(product).then(data => {
+      this.cartService.addSubscription(product, this.authService.token).then(data => {
 
        console.log("After sub:", data)
         this.subId = data.toString();
