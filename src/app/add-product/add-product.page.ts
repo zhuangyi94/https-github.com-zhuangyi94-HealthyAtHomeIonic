@@ -24,11 +24,11 @@ export class AddProductPage implements OnInit {
   }
 
   register(form) {
-    console.log(form.value)
+    console.log("Registration form",form.value)
 
-    if (form.value.category = "Yoga") {
+    if (form.value.category == "Yoga") {
       form.value.category = "0e56a1a9-3951-41e0-bd7b-b92ea7a67c9d"
-    } else if (form.value.category = "HIIT") {
+    } else if (form.value.category == "HIIT") {
       form.value.category = "5d6e1b05-b798-4ff4-94cf-8cd31d12cdc8"
     } else {
       form.value.category = "114f47d8-5dbc-4300-9e12-09b379853471"

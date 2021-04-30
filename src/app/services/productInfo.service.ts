@@ -111,15 +111,15 @@ export class CartService {
       }
     }
 
-    let categoryAerobic = {
-      category: 'Aerobic',
+    let categoryHIIT = {
+      category: 'HIIT',
       products: []
     }
 
     for (let i = 0; i < productData.products.length; i++) {
       //console.log(productData.products[i]); //use i instead of 0
 
-      if (productData.products[i].categoryFk == "ae4ee32a-2bb7-4c45-8c2e-b8c616d4c77c") {
+      if (productData.products[i].categoryFk == "5d6e1b05-b798-4ff4-94cf-8cd31d12cdc8") {
         console.log("same", productData.products.categoryFk)
         let list = {
 
@@ -130,11 +130,34 @@ export class CartService {
           startDate: productData.products[i].startDate,
           endDate: productData.products[i].endDate
         }
-        categoryAerobic.products.push(list);
+        categoryHIIT.products.push(list);
       }
     }
 
-    this.productList = [categoryYoga, categoryAerobic];
+    let categoryZumba = {
+      category: 'Zumba',
+      products: []
+    }
+
+    for (let i = 0; i < productData.products.length; i++) {
+      //console.log(productData.products[i]); //use i instead of 0
+
+      if (productData.products[i].categoryFk == "114f47d8-5dbc-4300-9e12-09b379853471") {
+        console.log("same", productData.products.categoryFk)
+        let list = {
+
+          id: productData.products[i].id,
+          name: productData.products[i].name,
+          price: productData.products[i].price,
+          description: productData.products[i].description,
+          startDate: productData.products[i].startDate,
+          endDate: productData.products[i].endDate
+        }
+        categoryZumba.products.push(list);
+      }
+    }
+
+    this.productList = [categoryYoga, categoryHIIT, categoryZumba];
 
     console.log("complete organize", this.productList);
   }
