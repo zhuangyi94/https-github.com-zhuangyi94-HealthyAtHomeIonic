@@ -37,9 +37,11 @@ export class CardPage implements OnInit {
       this.product.price = params.productPrice,
       this.product.photo = params.productPhoto
       this.product.userId = params.userId,
-      this.product.productId = params.productId
+        this.product.productId = params.productId
 
-      this.cartService.checkSubscription("f687a69a-0abd-4e9f-ae51-47b8a34b910a", this.product.productId).then(
+      console.log("check token", this.authService.token);
+
+      this.cartService.checkSubscription(this.authService.token, this.product.productId).then(
         result => {
           console.log("Subscription ID:", result)
           if (result) {

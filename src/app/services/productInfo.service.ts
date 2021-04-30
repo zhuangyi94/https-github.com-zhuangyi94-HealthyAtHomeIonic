@@ -37,9 +37,9 @@ export class CartService {
      
   }
 
-  public checkSubscription(userId,productId) {
+  public checkSubscription(token,productId) {
 
-    console.log("sub step 1");
+    console.log("sub step 1",token.id);
     //const headers =
     //  new HttpHeaders({
     //    'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ export class CartService {
     return new Promise<object>(resolve => {
       console.log("service step 2");
       this.httpClient.get
-        ('http://api.xiamaomi.com/productSubscription/search/' + userId
+        ('http://api.xiamaomi.com/productSubscription/search/' + token.id
         )
         .subscribe(data => {
           let value = this.checkSub(data, productId);
