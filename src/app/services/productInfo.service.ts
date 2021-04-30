@@ -23,8 +23,7 @@ export class CartService {
     return new Promise<object>(resolve => {
       console.log("service step 2");
          this.httpClient.get
-           ('http://api.xiamaomi.com/product/search/%20',
-             { headers }
+           ('http://api.xiamaomi.com/product/search/%20'
            )
            .subscribe(data => {
              this.organizeData(data);
@@ -37,6 +36,53 @@ export class CartService {
     
      
   }
+
+  public checkSubscription(userId,productId) {
+
+    console.log("sub step 1");
+    //const headers =
+    //  new HttpHeaders({
+    //    'Content-Type': 'application/json',
+    //    "Access-Control-Allow-Origin": ["http://localhost:8100", "http://localhost:3000"]
+    //  });
+
+    return new Promise<object>(resolve => {
+      console.log("service step 2");
+      this.httpClient.get
+        ('http://api.xiamaomi.com/productSubscription/search/' + userId
+        )
+        .subscribe(data => {
+          let value = this.checkSub(data, productId);
+          console.log("so values is", value)
+          if (value != null) {
+            console.log("its true",data)
+            data = value;
+            resolve(data)
+          }
+          else return false;
+          console.log("sub details", data)
+          
+          resolve(data);
+        }, err => {
+          console.log(err);
+          return (err);
+        });
+    });
+
+
+  }
+
+  checkSub(data, productID) {
+    console.log("waht we gaet", data, productID)
+    for (let i = 0; i < data.productSubscriptions.length; i++) {
+      if ((data.productSubscriptions[i].productId == productID) && (data.productSubscriptions[i].isActive!=false)) {
+        return data.productSubscriptions[i].productSubscriptionId;
+      }
+
+    }
+    return null;
+  }
+
 
   organizeData(productData) {
 
@@ -54,10 +100,12 @@ export class CartService {
       if (productData.products[i].categoryFk == "0e56a1a9-3951-41e0-bd7b-b92ea7a67c9d") {
         let list = {
 
-          id: i,
+          id: productData.products[i].id ,
           name: productData.products[i].name,
           price: productData.products[i].price,
           description: productData.products[i].description,
+          startDate: productData.products[i].startDate,
+          endDate: productData.products[i].endDate
         }
         categoryYoga.products.push(list);
       }
@@ -75,10 +123,12 @@ export class CartService {
         console.log("same", productData.products.categoryFk)
         let list = {
 
-          id: i,
+          id: productData.products[i].id,
           name: productData.products[i].name,
           price: productData.products[i].price,
           description: productData.products[i].description,
+          startDate: productData.products[i].startDate,
+          endDate: productData.products[i].endDate
         }
         categoryAerobic.products.push(list);
       }
@@ -100,11 +150,32 @@ export class CartService {
     }
 
   addProduct(product) {
-    const headers =
-      new HttpHeaders({
-        'Content-Type': 'application/json',
-        "Access-Control-Allow-Origin": "http://localhost:8100"
-      });
+
+    //product = {
+    //  "Name": "Yoga with Tim",
+    //  "Description": "Yoga Class",
+    //  "Price": 80,
+    //  "Picture": "xx",
+    //  "CategoryFk": "0e56a1a9-3951-41e0-bd7b-b92ea7a67c9d",
+    //  "StartDate": "2021-04-25T10:35:15.459+08:00",
+    //  "EndDate": "2021-04-25T10:35:15.459+08:00"
+    //}
+
+    //const headers =
+    //  new HttpHeaders({
+    //    'Content-Type': 'application/json',
+    //    "Access-Control-Allow-Origin": "http://localhost:8100"
+    //  });
+    //const headers = new HttpHeaders().set('Content-Type', 'application/json')
+    //  .set('Accept', 'application/json')
+    //  .set('responseType', 'text')
+    //  .set('Access-Control-Allow-Origin', '*')
+    //  .set('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
+
+
+    //var header = new Headers();
+    //header.append('Content - Type', 'application / x - www - form - urlencoded; charset = UTF - 8');
+
     console.log("product", product)
     const params = ""
     //const params = JSON.parse(JSON.stringify(product));
@@ -115,15 +186,17 @@ export class CartService {
       console.log("xx",params);
       return new Promise(resolve => {
         this.httpClient.post
-          ('http://localhost:5000/product/add',product,
+          ('http://localhost:5000/product/Add', product,
             //{ headers, responseType: responseType, params }
-            { responseType: responseTypes}
+            { responseType: responseTypes }
+            
+            
             
             
           )
           .subscribe(data => {
             resolve(data);
-            //return (data);
+            return (data);
             console.log(data);
           }, err => {
             console.log(err);
@@ -140,7 +213,11 @@ export class CartService {
         "Access-Control-Allow-Origin": "http://localhost:8100"
       });
     console.log("product", product)
-    const params = ""
+    product.userID = "f687a69a-0abd-4e9f-ae51-47b8a34b910a"
+    const params = {
+      ProductFk: product.productId,
+      UserFk: product.userID
+    }
     //const params = JSON.parse(JSON.stringify(product));
     const responseTypes = 'text';
 
@@ -149,7 +226,46 @@ export class CartService {
       console.log("xx", params);
       return new Promise(resolve => {
         this.httpClient.post
-          ('http://api.xiamaomi.com/productSubscription/Add', product,
+          ('http://localhost:5000/productSubscription/Add', params,
+            //{ headers, responseType: responseType, params }
+            { responseType: responseTypes }
+
+
+          )
+          .subscribe(data => {
+            //return data;
+            resolve(data);
+            //return (data);
+            console.log(data);
+          }, err => {
+            console.log(err);
+          });
+      });
+    }
+
+  }
+
+  removeSubscription(subId) {
+    const headers =
+      new HttpHeaders({
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin": "http://localhost:8100"
+      });
+    console.log("sub ID", subId)
+    //product.userID = "f687a69a-0abd-4e9f-ae51-47b8a34b910a"
+    //const params = {
+    //  ProductFk: product.productId,
+    //  UserFk: product.userID
+    //}
+    //const params = JSON.parse(JSON.stringify(product));
+    const responseTypes = 'text';
+
+    {
+
+      //console.log("xx", params);
+      return new Promise(resolve => {
+        this.httpClient.get
+          ('http://localhost:5000/productSubscription/remove/' + subId,
             //{ headers, responseType: responseType, params }
             { responseType: responseTypes }
 
@@ -191,7 +307,7 @@ export class CartService {
           )
           .subscribe(data => {
             resolve(data);
-            //return (data);
+            return (data);
             console.log(data);
           }, err => {
             console.log(err);

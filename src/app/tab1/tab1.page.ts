@@ -61,20 +61,25 @@ export class Tab1Page implements OnInit{
     public navCtrl: NavController) { }
 
   public ngOnInit() {
-    //console.log("ionViewWillEnter fired");
-    //this.cartService.getProducts().then((data) => {
-    //  console.log("hehe", this.items, data);
-    //  this.items = data;
+    console.log("ionViewWillEnter fired");
+    this.cartService.getProducts().then((data) => {
+      console.log("hehe", this.items, data);
+      this.items = data;
       
-    //});
-    //console.log(this.items);
-    //this.cart = this.cartService.getCart();
-    this.items = this.data;
+    });
+    console.log(this.items);
+    this.cart = this.cartService.getCart();
+   // this.items = this.data;
 
   }
 
   ionViewWillEnter() {
     this.ngOnInit();
+    console.log("wake up")
+  }
+
+  ionViewDidEnter(){
+    console.log("suit up")
   }
 
   addToCart(product) {
@@ -86,17 +91,21 @@ export class Tab1Page implements OnInit{
   
       queryParams: {
         productName: product.name,
+        productId: product.id,
         productDescription: product.description,
         productPrice: product.price,
         productPhoto: this.photo,
-        productStartDate: "2021-04-25T10:35:15.459+08:00",
-        productEndDate: "2021-04-26T10:35:15.459+08:00"
+        productStartDate: product.startDate,
+        productEndDate: product.endDate,
+        userID: ""
       }
     };
+    console.log("Navextra", navigationExtras)
     this.router.navigate(['card'], navigationExtras);
 
     //this.router.navigateByUrl('/card');
   }
+
 
   CreateProduct() {
     //this.navCtrl.navigateForward('card'), this.cart;
@@ -105,8 +114,9 @@ export class Tab1Page implements OnInit{
       
     //  queryParams: this.cart
     //};
-    this.cartService.getRequest();
-    this.router.navigate(['add-product']);
+    //this.cartService.getRequest();
+    this.navCtrl.navigateForward('add-product');
+    //this.router.navigate(['add-product']);
   }
 
   generatePhoto() {

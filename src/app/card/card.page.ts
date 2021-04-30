@@ -16,13 +16,20 @@ export class CardPage implements OnInit {
     price: "",
     photo: "",
     startDate: "",
-    endDate: ""
+    endDate: "",
+    userId: "",
+    productId: ""
   }
+
+  public subId = ""
   //public productName = "";
   //public productDescription = "";
   //public dateTime = "";
 
   ngOnInit() {
+
+    
+
     this.activatedRoute.queryParams.subscribe(params => {
 
       console.log("params",params)
@@ -31,21 +38,35 @@ export class CardPage implements OnInit {
       this.product.startDate = "2021-04-25 10:00",
       this.product.endDate = "2021-04-26 10:00",
       this.product.price = params.productPrice,
-      this.product.photo = params.productPhoto
+        this.product.photo = params.productPhoto
+      this.product.userId = params.userId,
+        this.product.productId = params.productId
+
+      this.cartService.checkSubscription("f687a69a-0abd-4e9f-ae51-47b8a34b910a", this.product.productId).then(
+        result => {
+          console.log("final result", result)
+          if (result) {
+            document.getElementById('sub').innerHTML = 'Subscribed';
+            this.subId = result.toString();
+          } else {
+            document.getElementById('sub').innerHTML = 'Subscribe'
+          }
+        }
+      );
 
       console.log(this.product);
-      
-      //if (params && params.special) {
-      //  //store the temp in data
-      //  this.data = JSON.parse(params.special);
-      //}
+
     })
+
+    
+
+    
   }
 
   constructor(public activatedRoute: ActivatedRoute,
     private cartService: CartService,
     private router: Router  ) {
-
+    
     //this.activatedRoute.queryParams.subscribe((res) => {
     //  console.log(res);
     //});
@@ -58,25 +79,41 @@ export class CardPage implements OnInit {
     //});
 
   }
+  
 
   subscribeProduct(product) {
 
     console.log("product", product)
+    console.log("should we sub", document.getElementById('sub').innerHTML)
+    let selection = document.getElementById('sub').innerHTML;
+    console.log("selection value:" + selection + "xxx")
+    if (selection == " Subscribe ") {
+      console.log("sub here 1")
+      this.cartService.addSubscription(product).then(data => {
+
+       console.log("after sub", data)
+        this.subId = data.toString();
+        console.log(this.subId)
+      });
+    } else {
+      console.log("sub here 2", this.subId)
+      this.cartService.removeSubscription(this.subId).then(data => {
+
+        console.log("after unsub", data)
+      });
+    }
+
+
+
     if (document.getElementById('sub').innerHTML == 'Subscribed') {
       document.getElementById('sub').innerHTML = 'Subscribe';
       //document.body.style.background = 'red';
-      document.getElementById('sub').style.color  = 'Primary';
+      document.getElementById('sub').style.color = 'Primary';
     } else {
       document.getElementById('sub').innerHTML = 'Subscribed';
       //document.body.style.background = 'green';
-      document.getElementById('sub').style.color  = 'Secondary';
+      document.getElementById('sub').style.color = 'Secondary';
     }
-
-    this.cartService.addSubscription(product).then(data => {
-
-
-
-    });
 
   }
 

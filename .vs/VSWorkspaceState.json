@@ -5,9 +5,12 @@
     "\\src\\app",
     "\\src\\app\\add-product",
     "\\src\\app\\card",
+    "\\src\\app\\pages",
+    "\\src\\app\\pages\\login",
     "\\src\\app\\services",
-    "\\src\\app\\tab1"
+    "\\src\\app\\tab1",
+    "\\src\\app\\tabs"
   ],
-  "SelectedNode": "\\src\\app\\services\\productInfo.service.ts",
+  "SelectedNode": "\\src\\app\\tab1\\tab1.page.ts",
   "PreviewInSolutionExplorer": false
 }
