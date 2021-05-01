@@ -39,9 +39,9 @@ export class CartService {
      
   }
 
-  public checkSubscription(userId,productId) {
+  public checkSubscription(token,productId) {
 
-    console.log("sub step 1");
+    console.log("sub step 1",token.id);
     //const headers =
     //  new HttpHeaders({
     //    'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ export class CartService {
     return new Promise<object>(resolve => {
       console.log("service step 2");
       this.httpClient.get
-        ('http://api.xiamaomi.com/productSubscription/search/' + userId
+        ('http://api.xiamaomi.com/productSubscription/search/' + token.id
         )
         .subscribe(data => {
           let value = this.checkSub(data, productId);
@@ -211,7 +211,7 @@ export class CartService {
       console.log("xx",params);
       return new Promise(resolve => {
         this.httpClient.post
-          ('http://localhost:5000/product/Add', product,
+          ('http://api.xiamaomi.com/product/Add', product,
             //{ headers, responseType: responseType, params }
             { responseType: responseTypes }
             
@@ -252,7 +252,7 @@ export class CartService {
       console.log("xx", params);
       return new Promise(resolve => {
         this.httpClient.post
-          ('http://localhost:5000/productSubscription/Add', params,
+          ('http://api.xiamaomi.com/productSubscription/Add', params,
             //{ headers, responseType: responseType, params }
             { responseType: responseTypes }
 
@@ -291,7 +291,7 @@ export class CartService {
       //console.log("xx", params);
       return new Promise(resolve => {
         this.httpClient.get
-          ('http://localhost:5000/productSubscription/remove/' + subId,
+          ('http://api.xiamaomi.com/productSubscription/remove/' + subId,
             //{ headers, responseType: responseType, params }
             { responseType: responseTypes }
 

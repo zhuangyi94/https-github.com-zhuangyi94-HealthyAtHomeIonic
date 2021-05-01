@@ -4,6 +4,24 @@ import { AlertController } from '@ionic/angular';
 import { formatDate } from '@angular/common';
 import { ScheduleService } from './../services/scheduleinfo.service';
 import { CalendarMode } from 'ionic2-calendar/calendar';
+import { NavController } from '@ionic/angular';
+import { AuthenticationService } from './../services/authentication.service';
+
+let productObj = {
+  "productSubscriptions": [
+      {
+          "productId" : "6b4c8fb8-090c-4482-9d93-568fd4e0b1fa",
+          "userId" : "f687a69a-0abd-4e9f-ae51-47b8a34b910a"
+      },
+      {
+          "productId" : "6b4c8fb8-090c-4482-9d93-568fd4e0b1fa",
+          "userId" : "f687a69a-0abd-4e9f-ae51-47b8a34b910a"
+      }
+  ],
+  "resultsType" : 0,
+  "paginationToken" : null
+};
+
 
 @Component({
   selector: 'app-tab3',
@@ -18,8 +36,7 @@ export class Tab3Page implements OnInit {
     title: '',
     desc: '',
     startTime: '',
-    endTime: '',
-    productName: ''
+    endTime: ''
   };
 
 
@@ -35,20 +52,26 @@ export class Tab3Page implements OnInit {
 
 
 
-  constructor(private alertCtrl: AlertController, @Inject(LOCALE_ID) private locale: string, private  scheduleService : ScheduleService) { }
+  constructor(private alertCtrl: AlertController,
+    @Inject(LOCALE_ID) private locale: string,
+    private  scheduleService : ScheduleService,
+    public navCtrl: NavController,
+    private  authenticationService : AuthenticationService) {
+  }
+
+  ionViewWillEnter() {
+    this.ngOnInit();
+  }
 
   ngOnInit() {
-    //Schedule from Schedule Table by calling https://localhost:5001/scheduler/get/all API
-    this.eventSource = this.scheduleService.getSchedulesFromScheduleTable().then( x => this.eventSource = x).catch( error => console.log("error binding to event source..", error));
 
-    //If received prodcut Id with Dummy single object
-    //pass value
-    //let productObj = [{productId: '6b4c8fb8-090c-4482-9d93-568fd4e0b1fa' , productName : "Yoga Course", startDate : new Date(), endDate : new Date()}]
-    //this.eventSource = this.scheduleService.getSchedulesFromProductIdObject(productObj).then( x => this.eventSource = x).catch( error => console.log("error binding to event source..", error));
-
-
-    //If received product Id is in List;
-    //this.eventSource = this.scheduleService.getProductList().then( x => this.scheduleService.getSchedulesFromProductIdList(x)).then( y => this.eventSource = y).catch( error => console.log("error binding to event source..", error));
+    let token =  this.authenticationService.token;
+    console.log("loginToken...:", token);
+    let userData = JSON.parse(JSON.stringify(token));
+    console.log("userData....", userData);
+    let paramsUserId = userData.id;
+    console.log("paramsUserId....", paramsUserId);
+    this.eventSource = this.scheduleService.getProductList(paramsUserId).then( x => this.scheduleService.getSchedulesFromProductIdList(x)).then( y => this.eventSource = y).catch( error => console.log("error binding to event source..", error));
   }
 
 
@@ -88,7 +111,7 @@ export class Tab3Page implements OnInit {
     const alert = await this.alertCtrl.create({
       header: event.title,
       subHeader: event.desc,
-      message: 'Product Name: ' + event.productName + '<br><br>From: ' + start + '<br><br>To: ' + end,
+      message: 'From: ' + start + '<br><br>To: ' + end,
       buttons: ['OK']
     });
     alert.present();
