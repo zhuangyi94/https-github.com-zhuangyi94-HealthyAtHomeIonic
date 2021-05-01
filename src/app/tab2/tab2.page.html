@@ -8,14 +8,15 @@
 
   <ion-card >
     <ion-card-header>
-      <ion-card-title >Top 10 Workout Trend</ion-card-title>      
+      <ion-card-title >Workout Trend Chart</ion-card-title>      
     </ion-card-header>
     <ion-card-content>
       <ion-list>
-          <ion-item><ion-note  slot="start">1</ion-note><ion-label>David's Hot Yoga</ion-label></ion-item>
-          <ion-item><ion-note  slot="start">2</ion-note><ion-label>The Best Tabata by June</ion-label></ion-item>
-          <ion-item><ion-note  slot="start">3</ion-note><ion-label>Healthy TaiChi by Yi Ping</ion-label></ion-item>
-          <ion-item><ion-note  slot="start">4</ion-note><ion-label>Jenny's Cardio Workout</ion-label></ion-item>
+          <ion-item *ngFor ="let chartitem of chartlist; let i = index">
+            <ion-note  slot="start">{{i+1}}</ion-note>
+            <ion-label>{{chartitem.name}}</ion-label>
+          </ion-item>
+
 
       </ion-list>
       

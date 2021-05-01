@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { WordpressService } from '../services/product.service';
+import { CartService } from '../services/productInfo.service';
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
@@ -11,8 +12,8 @@ export class Tab2Page implements OnInit {
   posts = [];
   page = 1;
   count = null;
- 
-  constructor(private wp: WordpressService, private loadingCtrl: LoadingController) { }
+  chartlist = [];
+  constructor(private wp: WordpressService, private loadingCtrl: LoadingController, private productSerice : CartService) { }
  
   ngOnInit() {
     this.loadPosts();
@@ -24,9 +25,9 @@ export class Tab2Page implements OnInit {
     });
     await loading.present();
  
-    this.wp.getPosts().subscribe(res => {
-      this.count = this.wp.totalPosts;
-      this.posts = res;
+    this.productSerice.getTop5ChartTrend().subscribe(res => {
+      this.chartlist=res.product;
+    
       loading.dismiss();
     });
   }

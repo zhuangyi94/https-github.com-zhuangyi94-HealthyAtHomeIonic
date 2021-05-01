@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { __param } from 'tslib';
 import { promise } from 'protractor';
+import { BehaviorSubject, from, Observable, Subject  } from 'rxjs';
+import { map, tap, switchMap,catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +11,7 @@ import { promise } from 'protractor';
 export class CartService {
 
   public productList = [];
-
+  
 
   public getRequest(){
 
@@ -426,6 +428,17 @@ export class CartService {
     return this.cart;
   }
 
+  getTop5ChartTrend():Observable<any>{
+
+    return this.httpClient.get(`http://api.xiamaomi.com/productTrend/top5chart`).pipe(
+      
+      map((data: any) =>{
+        console.log(data);
+        return data;
+      })
+    )
+
+  }
   //addProduct(product) {
   //  this.cart.push(product);
   //}
