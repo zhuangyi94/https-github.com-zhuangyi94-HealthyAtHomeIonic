@@ -209,7 +209,7 @@ export class CartService {
       console.log("xx",params);
       return new Promise(resolve => {
         this.httpClient.post
-          ('http://localhost:5000/product/Add', product,
+          ('http://api.xiamaomi.com/product/Add', product,
             //{ headers, responseType: responseType, params }
             { responseType: responseTypes }
             
@@ -250,7 +250,7 @@ export class CartService {
       console.log("xx", params);
       return new Promise(resolve => {
         this.httpClient.post
-          ('http://localhost:5000/productSubscription/Add', params,
+          ('http://api.xiamaomi.com/productSubscription/Add', params,
             //{ headers, responseType: responseType, params }
             { responseType: responseTypes }
 
@@ -289,7 +289,7 @@ export class CartService {
       //console.log("xx", params);
       return new Promise(resolve => {
         this.httpClient.get
-          ('http://localhost:5000/productSubscription/remove/' + subId,
+          ('http://api.xiamaomi.com/productSubscription/remove/' + subId,
             //{ headers, responseType: responseType, params }
             { responseType: responseTypes }
 
