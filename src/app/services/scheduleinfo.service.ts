@@ -1,3 +1,4 @@
+import { filter } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 
@@ -22,7 +23,7 @@ export class ScheduleService {
   {
     return new Promise(resolve => {
       this.httpClient.get
-        ('http://api.xiamaomi.com/productSubscriptionId/search/' + paramsUserId,
+        ('http://api.xiamaomi.com/productSubscription/search/' + paramsUserId,
         { headers }
         )
         .subscribe(async data => {

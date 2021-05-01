@@ -3,24 +3,10 @@ import { CalendarComponent } from 'ionic2-calendar';
 import { AlertController } from '@ionic/angular';
 import { formatDate } from '@angular/common';
 import { ScheduleService } from './../services/scheduleinfo.service';
-import { CalendarMode } from 'ionic2-calendar/calendar';
+import { CalendarMode, Step } from 'ionic2-calendar/calendar';
 import { NavController } from '@ionic/angular';
 import { AuthenticationService } from './../services/authentication.service';
-
-let productObj = {
-  "productSubscriptions": [
-      {
-          "productId" : "6b4c8fb8-090c-4482-9d93-568fd4e0b1fa",
-          "userId" : "f687a69a-0abd-4e9f-ae51-47b8a34b910a"
-      },
-      {
-          "productId" : "6b4c8fb8-090c-4482-9d93-568fd4e0b1fa",
-          "userId" : "f687a69a-0abd-4e9f-ae51-47b8a34b910a"
-      }
-  ],
-  "resultsType" : 0,
-  "paginationToken" : null
-};
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -46,6 +32,7 @@ export class Tab3Page implements OnInit {
   calendar = {
     mode: 'month' as CalendarMode,
     currentDate: new Date(),
+    step: 30 as Step
   };
 
   //@ViewChild(CalendarComponent) myCal: CalendarComponent;
@@ -56,7 +43,8 @@ export class Tab3Page implements OnInit {
     @Inject(LOCALE_ID) private locale: string,
     private  scheduleService : ScheduleService,
     public navCtrl: NavController,
-    private  authenticationService : AuthenticationService) {
+    private  authenticationService : AuthenticationService,
+    private router: Router) {
   }
 
   ionViewWillEnter() {
@@ -64,7 +52,9 @@ export class Tab3Page implements OnInit {
   }
 
   ngOnInit() {
-
+    if(!this.authenticationService.checkIfUserTokenExist()){
+      this.router.navigateByUrl('/login', { replaceUrl: true });
+    }
     let token =  this.authenticationService.token;
     console.log("loginToken...:", token);
     let userData = JSON.parse(JSON.stringify(token));
