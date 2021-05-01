@@ -48,8 +48,8 @@ export class AddProductPage implements OnInit {
     }
 
     let schedule = {
-      schedulerName: "dummy",
-      schedulerDescription: "dummy",
+      //schedulerName: "dummy",
+      //schedulerDescription: "dummy",
       startDate: form.value.startTime,
       endDate: form.value.endtime,
       productName: form.value.name,
