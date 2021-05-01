@@ -9,7 +9,7 @@
         </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button (click)="CreateProduct()">
+      <ion-button (click)="CreateProduct()" [hidden]=isUser >
         <ion-badge *ngIf="cart.length > 0">{{ cart.length }}</ion-badge>
         <ion-icon slot="icon-only" name="add-circle"></ion-icon>
       </ion-button>
