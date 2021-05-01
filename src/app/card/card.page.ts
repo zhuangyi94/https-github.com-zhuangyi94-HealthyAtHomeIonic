@@ -32,12 +32,12 @@ export class CardPage implements OnInit {
       console.log("params that passed into Product Profile: ",params)
       this.product.productName = params.productName;
       this.product.productDescription = params.productDescription,
-      this.product.startDate = "2021-04-25 10:00",
-      this.product.endDate = "2021-04-26 10:00",
+        this.product.startDate = params.productStartDate,
+        this.product.endDate = params.productEndDate,
       this.product.price = params.productPrice,
       this.product.photo = params.productPhoto
       this.product.userId = params.userId,
-        this.product.productId = params.productId
+      this.product.productId = params.productId
 
       console.log("check token", this.authService.token);
 
