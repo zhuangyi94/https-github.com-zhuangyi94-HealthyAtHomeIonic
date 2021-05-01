@@ -20,14 +20,13 @@
       Subscription fee: {{product.price}}
       <br />
       <br />
-      Time: {{product.startDate}} - {{product.endDate}}
+      Time: {{product.startDate| date: 'dd/MM/yyyy hh:mm'}} - {{product.endDate| date: 'dd/MM/yyyy hh:mm'}}
       <ion-button item-start id="sub" (click)="subscribeProduct(product)">
         {{btn_txt}}
       </ion-button>
       <ion-button item-end (click)="returnToMainMenu()">
         Get Back
       </ion-button>
-
     </ion-card-content>
 
 </ion-card>
