@@ -16,12 +16,14 @@
       <img src="data:image/png;base64,{{product.photo}}" />
       {{product.productDescription}}
       <br />
+      <br />
       Subscription fee: {{product.price}}
       <br />
+      <br />
       Time: {{product.startDate}} - {{product.endDate}}
-    <ion-button item-start id="sub" (click)="subscribeProduct(product)">
-      {{btn_txt}}
-    </ion-button>
+      <ion-button item-start id="sub" (click)="subscribeProduct(product)">
+        {{btn_txt}}
+      </ion-button>
       <ion-button item-end (click)="returnToMainMenu()">
         Get Back
       </ion-button>
